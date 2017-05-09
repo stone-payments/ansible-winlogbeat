@@ -1,0 +1,15 @@
+#jinja2: newline_sequence:'\r\n'
+winlogbeat.event_logs:
+  - name: Application
+    ignore_older: 72h
+  - name: Security
+  - name: System
+
+{% if use_elasticsearch and elasticsearch_endpoint != '' and elasticsearch_port != '' %}
+output.elasticsearch
+  hosts: ["{{ elasticsearch_endpoint }}:{{ elasticsearch_port }}"]
+{% endif %}
+{% if not use_elasticsearch and logstash_endpoint != '' and logstash_port != '' %}
+output.logstash:
+  hosts: ["{{ logstash_endpoint }}:{{ logstash_port }}"]
+{% endif %}
