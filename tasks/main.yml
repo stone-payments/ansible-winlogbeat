@@ -1,0 +1,9 @@
+---
+# tasks file for buy4.winlogbeat
+- name: install winlogbeat
+  include: install.yml
+  tags: winlobeat_installation
+
+- name: configure winlogbeat
+  include: configure.yml
+  tags: winlogbeat_configuration

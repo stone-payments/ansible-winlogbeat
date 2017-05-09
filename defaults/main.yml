@@ -1,0 +1,4 @@
+---
+winlogbeat_installation_path: 'C:\\ProgramData\\chocolatey\\lib\\winlogbeat\\tools\\winlogbeat-5.4.0-windows-x86_64\\winlogbeat.yml'
+
+use_elasticsearch: false

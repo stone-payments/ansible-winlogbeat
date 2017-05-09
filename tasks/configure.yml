@@ -1,0 +1,46 @@
+---
+- name: enable logstash output
+  win_lineinfile:
+    dest: "{{ winlogbeat_installation_path }}"
+    regexp: '\#output\.logstash\:'
+    insertafter: '\#output\.logstash\:'
+    line: 'output.logstash:'
+  when: logstash_endpoint is defined and logstash_port is defined
+
+- name: configure logstash endpoint
+  win_lineinfile:
+    dest: "{{ winlogbeat_installation_path }}"
+    regexp: '\#hosts\:\s*\[\s*\"localhost\:5044\"\s*\]'
+    insertafter: '\#hosts\:\s*\[\s*\"localhost\:5044\"\s*\]'
+    line: '  hosts: ["{{ logstash_endpoint }}:{{ logstash_port }}"]'
+  when: logstash_endpoint is defined and logstash_port is defined
+
+- name: disable elasticsearch output
+  win_lineinfile:
+    dest: "{{ winlogbeat_installation_path }}"
+    regexp: 'output\.elasticsearch\:'
+    insertafter: 'output\.elasticsearch\:'
+    line: '#output.elasticsearch:'
+  when: logstash_endpoint is defined and logstash_port is defined
+
+- name: remove use of elasticsearch endpoint
+  win_lineinfile:
+    dest: "{{ winlogbeat_installation_path }}"
+    regexp: 'hosts\:\s*\[\s*\"localhost\:9200\"\s*\]'
+    insertafter: '  hosts\:\s*\[\s*\"localhost\:9200\"\s*\]'
+    line: '  #hosts: ["localhost:9200"]'
+  when: not use_elasticsearch
+
+- name: configure elasticsearch endpoint
+  win_lineinfile:
+    dest: "{{ winlogbeat_installation_path }}"
+    regexp: 'hosts\:\s*\[\s*\"localhost\:9200\"\s*\]'
+    insertafter: 'hosts\:\s*\[\s*\"localhost\:9200\"\s*\]'
+    line: '  hosts: ["{{ elasticsearch_endpoint }}:{{ elasticsearch_port }}"]'
+  when: elasticsearch_endpoint is defined and elasticsearch_port is defined
+
+- name: ensure winlogbeat is running
+  win_service:
+    name: winlogbeat
+    start_mode: auto
+    state: started

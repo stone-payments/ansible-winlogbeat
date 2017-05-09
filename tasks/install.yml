@@ -1,0 +1,6 @@
+---
+
+- name: install winlogbeat
+  win_chocolatey:
+    name: winlogbeat
+    state: present
