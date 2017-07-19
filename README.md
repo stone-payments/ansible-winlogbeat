@@ -1,7 +1,7 @@
 Winlogbeat
 =========
 
-This role installs and configures Winlobeat service.
+This role installs and configures Winlogbeat service.
 
 Requirements
 ------------
