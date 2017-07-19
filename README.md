@@ -1,36 +1,54 @@
-Role Name
+Winlogbeat
 =========
 
-A brief description of the role goes here.
+This role installs and configures Winlobeat service.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This roles needs to be run agains a Windows machine - of course - and requires the presence of [Chocolatey](https://chocolatey.org/). A [role](https://github.com/stone-payments/ansible-choco) to install choco can be used. 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+winlogbeat_installation_path: 'C:\\ProgramData\\chocolatey\\lib\\winlogbeat\\tools\\winlogbeat-5.4.0-windows-x86_64\\winlogbeat.yml'
 
-Dependencies
-------------
+use_elasticsearch: false
+```
+These vars are to be given on your playbook:
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+logstash_endpoint: ''
+logstash_port: ''
+
+elasticsearch_endpoint: ''
+elasticsearch_port: ''
+```
+Use the logstash ones to configure the output to logstash and the elasticsearch ones to output to elasticsearch.
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here is an example setting the output to logstash:
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - role: ansible-winlogbeat
+           logstash_endpoint: your.logstash.endpoint
+           logstash_port: 42
+
+Here is an example setting the output to elasticsearch:
+
+    - hosts: servers
+      roles:
+         - role: ansible-winlogbeat
+           elasticsearch_endpoint: your.elasticsearch.endpoint
+           elasticsearch_port: 42
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
