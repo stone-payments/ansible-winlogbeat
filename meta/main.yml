@@ -1,17 +1,14 @@
+---
 galaxy_info:
   author: Carlos Martins
   description: Role to install and configure Winlogbeat2
   company: Stone Payments
-
   license: MIT license
-
   min_ansible_version: 2.0.0
-
   platforms:
-  - name: Windows
-    versions:
-    - 2012R2
-
+    - name: Windows
+      versions:
+        - 2012R2
+        - 2016
   galaxy_tags: []
-
 dependencies: []
