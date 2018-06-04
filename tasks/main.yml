@@ -1,9 +1,19 @@
 ---
-# tasks file for buy4.winlogbeat
 - name: install winlogbeat
-  include: install.yml
-  tags: winlobeat_installation
+  win_chocolatey:
+    name: winlogbeat
+    state: present
+    version: "{{ winlogbeat_version }}"
 
-- name: configure winlogbeat
-  include: configure.yml
-  tags: winlogbeat_configuration
+- name: ensure winlogbeat is running
+  win_service:
+    name: winlogbeat
+    start_mode: auto
+    state: started
+
+- name: copy config file
+  win_template:
+    src: "winlogbeat.yml.j2"
+    dest: "{{ winlogbeat_installation_path }}"
+    newline_sequence: '\n'
+  notify: restart winlogbeat
