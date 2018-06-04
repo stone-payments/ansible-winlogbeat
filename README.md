@@ -1,51 +1,61 @@
-Winlogbeat
-=========
-
+# Stone Payments - Winlogbeat
 This role installs and configures Winlogbeat service.
 
-Requirements
-------------
+## Requirements
+This roles needs to be run agains a Windows machine - of course - and requires the presence of [Chocolatey](https://chocolatey.org/).
 
-This roles needs to be run agains a Windows machine - of course - and requires the presence of [Chocolatey](https://chocolatey.org/). A [role](https://github.com/stone-payments/ansible-choco) to install choco can be used. 
-
-Role Variables
---------------
-
+## Role Variables
 ```yaml
-winlogbeat_installation_path: 'C:\\ProgramData\\chocolatey\\lib\\winlogbeat\\tools\\winlogbeat-5.4.0-windows-x86_64\\winlogbeat.yml'
-
-use_elasticsearch: false
+winlogbeat_version: 6.2.4
+winlogbeat_installation_path: C:\ProgramData\chocolatey\lib\winlogbeat\tools\winlogbeat-{{ winlogbeat_version }}-windows-x86_64\winlogbeat.yml
 ```
+
 These vars are to be given on your playbook:
 
 ```yaml
-logstash_endpoint: ''
-logstash_port: ''
+winlogbeat_event_logs:
+  - name: Application
+    ignore_older: 72h
+  - name: Security
+  - name: System
 
-elasticsearch_endpoint: ''
-elasticsearch_port: ''
+winlogbeat_output_elaticsearch: false
+winlogbeat_elaticsearch_hosts:
+  - "http://localhost:9200"
+
+winlogbeat_output_beats: false
+winlogbeat_beats_hosts:
+  - "127.0.0.1:5044"
 ```
+
 Use the logstash ones to configure the output to logstash and the elasticsearch ones to output to elasticsearch.
 
-Example Playbook
-----------------
+## Example Playbook
 Here is an example setting the output to logstash:
 
-    - hosts: servers
-      roles:
-         - role: ansible-winlogbeat
-           logstash_endpoint: your.logstash.endpoint
-           logstash_port: 42
+```yaml
+- hosts: all
+  vars:
+    winlogbeat_version: 0.0.0
+    winlogbeat_output_logstash: true
+    winlogbeat_logstash_hosts:
+      - "localhost:5044"
+  roles:
+    - role: stone-payments.winlogbeat
+```
 
 Here is an example setting the output to elasticsearch:
 
-    - hosts: servers
-      roles:
-         - role: ansible-winlogbeat
-           elasticsearch_endpoint: your.elasticsearch.endpoint
-           elasticsearch_port: 42
+```yaml
+- hosts: all
+  vars:
+    winlogbeat_version: ''
+    winlogbeat_output_elaticsearch: false
+    winlogbeat_elaticsearch_hosts:
+      - "http://localhost:9200"
+  roles:
+    - role: stone-payments.winlogbeat
+```
 
-License
--------
-
+## License
 MIT
