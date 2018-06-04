@@ -57,5 +57,21 @@ Here is an example setting the output to elasticsearch:
     - role: stone-payments.winlogbeat
 ```
 
+## Testing
+This role implements unit tests with Molecul and Vagrant. Notice that we only support Molecule 2.0 or greater. You can install molecule with:
+
+```shell
+pip install molecule
+```
+
+After having Molecule setup, you can run the tests with:
+
+```shell
+molecule test
+```
+
+## Contributing
+Just open a PR. We love PRs!
+
 ## License
 MIT
