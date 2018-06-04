@@ -8,8 +8,8 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: windows
-    box: stone/Windows2016Core
+  - name: winlogbeat
+    box: mwrock/Windows2016
     memory: 2048
     cpus: 2
     provider_options:
