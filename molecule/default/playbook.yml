@@ -2,9 +2,9 @@
 - name: Converge
   hosts: all
   vars:
-    winlogbeat_version: 6.2.4
-    winlogbeat_output_beats: true
-    winlogbeat_beats_host:
-      - "graylog.apps.buy4.io:5044"
+    winlogbeat_version: 0.0.0
+    winlogbeat_output_logstash: true
+    winlogbeat_logstash_hosts:
+      - "localhost:5044"
   roles:
     - role: stone-payments.winlogbeat
