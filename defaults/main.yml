@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 # Winlogbeat Version
 # -----------------------------------------------------------------------------
-winlogbeat_version: 6.2.4
+winlogbeat_version: 6.3.0
 winlogbeat_installation_path: C:\ProgramData\chocolatey\lib\winlogbeat\tools\winlogbeat-{{ winlogbeat_version }}-windows-x86_64\winlogbeat.yml
 
 # -----------------------------------------------------------------------------
